@@ -1,0 +1,31 @@
+name: Build Profanity Filter action image
+
+on:
+  push:
+
+jobs:
+  publish:
+
+    runs-on: ubuntu-latest
+    permissions:
+        contents: read
+        packages: write
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-dotnet@v3
+    - name: docker login
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Publish app
+      # TODO: tags
+      run: dotnet publish /t:PublishContainer -c Release -o ./publish -r linux-musl-x64 -p PublishTrimmed=true -p ContainerFamily=alpine3.18 -p ContainerRegistry=ghcr.io -p ContainerRepository=baronfel/profanity-filter -bl
+      working-directory: ./src/ProfanityFilter.Action
+    - uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: msbuild.binlog
+        path: src/ProfanityFilter.Action/msbuild.binlog

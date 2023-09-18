@@ -1,21 +1,19 @@
-name: 'Profane content filter'
-description: 'When used on issues or pull requests, will automatically filter out profanity.'
+name: "Profane content filter"
+description: "When used on issues or pull requests, will automatically filter out profanity."
 
 branding:
-  icon: 'filter'
-  color: 'red'
+  icon: "filter"
+  color: "red"
 
 inputs:
   token:
-    description:
-      'The GitHub token used to update the issues or pull requests with. Example, secrets.GITHUB_TOKEN.'
+    description: "The GitHub token used to update the issues or pull requests with. Example, secrets.GITHUB_TOKEN."
     required: true
   replacement-type:
-    description:
-      'The type of replacement method to use when profane content is filtered. Valid values are, Asterisk or Emoji.'
+    description: "The type of replacement method to use when profane content is filtered. Valid values are, Asterisk or Emoji."
     required: false
-    default: 'Asterisk'
+    default: "Asterisk"
 
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: "docker"
+  image: "docker://ghcr.io/baronfel/profanity-filter:latest"
