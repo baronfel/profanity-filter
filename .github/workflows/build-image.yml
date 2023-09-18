@@ -26,16 +26,16 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
     - name: Set container tag from branch
       if: github.ref_type == 'branch'
-      run: echo "container_tag=latest"
+      run: echo "container_tag=latest" >> "$GITHUB_OUTPUT"
       id: container_tag
     - name: Set container from tag
       if: github.ref_type == 'tag'
-      run: echo "container_tag=${{ github.ref_name }}"
+      run: echo "container_tag=${{ github.ref_name }}" >> "$GITHUB_OUTPUT"
       id: tag
     - name: Publish app
       working-directory: ./src/ProfanityFilter.Action
       run: |
-       dotnet publish 
+       dotnet publish \
             /t:PublishContainer \
             -r linux-musl-x64 \
             -p ContainerFamily=alpine3.18 \
