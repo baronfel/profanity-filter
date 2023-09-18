@@ -22,5 +22,5 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
     - name: Publish app
       # TODO: tags
-      run: dotnet publish -c Release -o ./publish -r linux-musl-x64 -p PublishTrimmed=true -p ContainerFamily=alpine -p ContainerRegistry=ghcr.io -p ContainerRepository=baronfel/profanity-filter -p PublishProfile=DefaultContainer
+      run: dotnet publish /t:PublishContainer -c Release -o ./publish -r linux-musl-x64 -p PublishTrimmed=true -p ContainerFamily=alpine -p ContainerRegistry=ghcr.io -p ContainerRepository=baronfel/profanity-filter -p PublishProfile=DefaultContainer
       working-directory: ./src/ProfanityFilter.Action
