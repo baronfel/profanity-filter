@@ -22,5 +22,10 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
     - name: Publish app
       # TODO: tags
-      run: dotnet publish /t:PublishContainer -c Release -o ./publish -r linux-musl-x64 -p PublishTrimmed=true -p ContainerFamily=alpine -p ContainerRegistry=ghcr.io -p ContainerRepository=baronfel/profanity-filter -p PublishProfile=DefaultContainer
+      run: dotnet publish /t:PublishContainer -c Release -o ./publish -r linux-musl-x64 -p PublishTrimmed=true -p ContainerFamily=alpine3.18 -p ContainerRegistry=ghcr.io -p ContainerRepository=baronfel/profanity-filter -bl
       working-directory: ./src/ProfanityFilter.Action
+    - uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: msbuild.binlog
+        path: src/ProfanityFilter.Action/msbuild.binlog
